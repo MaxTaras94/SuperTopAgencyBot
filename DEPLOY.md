@@ -16,6 +16,7 @@ sudo apt install -y sqlite3 pkg-config
 wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz
 tar -xzvf Python-3.11.1.tgz
 cd Python-3.11.1
+apt-get install build-essential
 ./configure --enable-optimizations --prefix=/home/www/.python3.11
 sudo make altinstall
 ```
