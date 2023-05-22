@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "supertop-bot"
+version = "0.1.0"
+description = ""
+authors = ["Maksim Tarasutin <maks@tarasutin.ru>"]
+readme = "README.md"
+packages = [{include = "supertop_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+'python-telegram-bot' = {extras = ["job-queue"], version = "^20.3"}
+aiosqlite = "==0.18.0"
+python-dotenv = "==0.21.1"
+schulze = "==0.1"
+jinja2 = "==3.1.2"
+gspread = "==5.4.0"
+pandas = ">=1.4.2"
+google-api-python-client = ">=2.86.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "==0.0.240"
+pyright = "==1.1.291"
+black = "==23.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["F", "E", "W", "C90",
+          "I", "N", "S", "B", "A",
+          "ISC", "T20", "Q", "PTH"]
+
+ignore = ["A003"]
+
+[tool.pyright]
+reportUnnecessaryTypeIgnoreComment="warning"

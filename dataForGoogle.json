@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "supertopnadivaagency",
+  "private_key_id": "a0ca2e86f1934ccec0371faf016bb6353dfe8dcf",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0kOaQnV8mLIv+\nf5pCxWzXhThl3IZnDJNxgWFPt5sxAsvfppsr3yx1yh6Yn590O65rhj1LqeBAfzQj\ntrzTAp6Wzcc6Ev3ZJfxvFPZwube5Ev3wCti+4zyrs+BP1eBJSa5mhn3PzZ4+RnkJ\nMxHtUdopCdHx0NzT/NH77pYCN54hSWqDA5HV9/hiTzLU/PLxSOqP8pNvG/nCQ60S\n19Vye/VhvMVN8KRCoMzYZEyKpNuwpNqftq7jLacLPUG9zqW5jFygAXnSVTizvZ4+\njgophO/wgq9Ha0acHTNvOIo9pdGVCBbl5OwOSqddmFVltveY0vHoDe6+NxMcYDsa\nGygyNABzAgMBAAECggEAJByysAt5QxY3rV9xx5babMQNAno3OxbNyi6Y+qt60zN+\n+KzGbeDFcI1KzzVlW4awHHsNeTtxSRTnpZjfbMgiVYC0Lo4rzKkHMmQb4XGTJ+V/\neemBbbPep2xjGTRqFd4xjfmp4cx6sHPBszBOjosHOZvoLBecgp0Wle8iezEKZBeG\n3phsKxW9m3UISy8zAYVbo/TF7IPqnFquB77AlB3JLON9YoVaV/TJcV8VCrnFUPd8\nwgUPYAjwoFN+5I0ogI/iCrgcLWqZ/VLNfUb+pJQ2nbSO6sbZjTCBClw+eC1fBIjb\nCVOXKVHKWhHcS0ju0mgOInwDOCJLUmXigmVwn1T4aQKBgQD4IspyUlwnOKX0Y3JW\ncU9vXC/So8VgSLqDICs/gcX7q7h61WxaazR+wTq8BCRNVMwywjt6KApcZKCgyb8d\npdWWz2DZ/8M5g/FOwX5zZLYgrwAdz8GzKjTK2C06IR+N3RWj3B8y31YxdHA1rE4m\nZLYwnB0Hm+tWmMubKiWEkiETFQKBgQC6SeSTXYYfnfqAAba1uHjh5JdgOYTUBmlC\n5qWgS2iB8y00Q2BkYPswp0GAjWaFDB9ThJ3E5Dngbt3NHP9vvwSEGVwmEnZaDIc2\nJ4/Vqy9tqIkZYYSnqMpYUqifk7qG8q5P6rl3siY2v5vmW3VQt+niZF9DC+wU3Hbw\nSN49cNDHZwKBgCAWh62O/wHHbpaTAacyEf6pojmQGicgYJYyY8Vbp9mq1Dl2PgPX\nVzuJC2pi8rrZW2q4+W4LnYNjM+53CHLyDhPpj3HBhGJ8sIjptst/W5oQZ2hzhG4B\n6D/PAtJAlE8JJxJAlfxDK2dL0nLubFDEt1bD6XEhdaaGLdZL9fwV1ZcdAoGBALEv\nIyc/Jxjfa6lg9+VzphZFE+3EB6Ca0Hd/ZT1HPAmNwAsboo0W6RPnoZeh5kbZttn7\nIwxoftwG1xQGZrZkmukCLfFQUh1oGRrbGiWCgsPsLypi5IeLNZo4VIYjPqCoJj+A\n5BMC8PHV4XSCvNyfcOeRzEG7DzrwTnhQ9oC90vY1AoGAeTl/ZxOY+MWAP5lNGS6D\nnD4pXCwE6sHdlbNb31pUjCah2LE+ijR3/7kSMc3B7BaBQhyZ/wEsmmgYqiWiWEcd\nCNNiexpgRHieP47s/NycyfjM6TkkV4nDIiDlNjphAa7CXex++nkz4l45waTHk6YZ\nn7RcXpgXqYwuFSJTPaOTF4s=\n-----END PRIVATE KEY-----\n",
+  "client_email": "nadivaagency@supertopnadivaagency.iam.gserviceaccount.com",
+  "client_id": "101301539020473654852",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nadivaagency%40supertopnadivaagency.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
