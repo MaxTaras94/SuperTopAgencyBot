@@ -5,7 +5,7 @@
 Скопируйте `.env.example` в `.env` и отредактируйте `.env` файл, заполнив в нём все переменные окружения:
 
 ```bash
-cp botanim_bot/.env.example botanim_bot/.env
+cp supertop_bot/.env.example supertop_bot/.env
 ```
 
 Для управления зависимостями используется [poetry](https://python-poetry.org/),
@@ -15,15 +15,9 @@ cp botanim_bot/.env.example botanim_bot/.env
 
 ```bash
 poetry install
-poetry run python -m botanim_bot
+poetry run python -m supertop_bot
 ```
 
-## Ideas
-
-- Сделать возможность напоминаний тем, кто еще не проголосовал о том, что голосование заканчивается через N часов
-- Добавить отзывы
-- Возможность поиска книг — возможно с автодополнением
-- Возможность предлагать книги для добавления
 
 ## Деплой
 
