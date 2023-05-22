@@ -32,7 +32,7 @@ curl -sSL https://install.python-poetry.org | python3 -
 mkdir -p ~/code/
 cd ~/code
 git clone https://github.com/MaxTaras94/SuperTopAgencyBot.git
-cd supertop-bot
+cd SuperTopAgencyBot
 ```
 
 Создаём переменные окружения:
