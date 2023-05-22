@@ -26,20 +26,20 @@ sudo make altinstall
 curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-Клонируем репозиторий в `~/code/botanim_bot`:
+Клонируем репозиторий в `~/code/supertop_bot`:
 
 ```bash
 mkdir -p ~/code/
 cd ~/code
-git clone https://github.com/alexey-goloburdin/botanim-bot.git
+git clone https://github.com/MaxTaras94/supertop-bot.git
 cd botanim-bot
 ```
 
 Создаём переменные окружения:
 
 ```
-cp botanim_bot/.env.example botanim_bot/.env
-vim botanim_bot/.env
+cp supertop_bot/.env.example supertop_bot/.env
+vim supertop_bot/.env
 ```
 
 `TELEGRAM_BOT_TOKEN` — токен бота, полученный в BotFather, `TELEGRAM_BOTANIM_CHANNEL_ID` — идентификатор группы книжного клуба, участие в котором будет проверять бот в процессе голосования.
@@ -47,14 +47,14 @@ vim botanim_bot/.env
 Заполняем БД начальными данными:
 
 ```bash
-cat botanim_bot/db.sql | sqlite3 botanim_bot/db.sqlite3
+cat supertop_bot/db.sql | sqlite3 supertop_bot/db.sqlite3
 ```
 
 Устанавливаем зависимости Poetry и запускаем бота вручную:
 
 ```bash
 poetry install
-poetry run python -m botanim_bot
+poetry run python -m supertop_bot
 ```
 
 Можно проверить работу бота. Для остановки, жмём `CTRL`+`C`.
@@ -69,27 +69,27 @@ which python
 Скопируем путь до интерпретатора Python в виртуальном окружении.
 
 Настроим systemd-юнит для автоматического запуска бота, подставив скопированный путь в ExecStart, а также убедившись,
-что директория до проекта (в данном случае `/home/www/code/botanim_bot`) у вас такая же:
+что директория до проекта (в данном случае `/home/www/code/supertop_bot`) у вас такая же:
 
 ```
-sudo tee /etc/systemd/system/botanimbot.service << END
+sudo tee /etc/systemd/system/supertop.service << END
 [Unit]
-Description=Botanim Telegram bot
+Description=SuperTopAgency Telegram bot
 After=network.target
 
 [Service]
 User=www
 Group=www-data
-WorkingDirectory=/home/www/code/botanim-bot
+WorkingDirectory=/home/www/code/supertop-bot
 Restart=on-failure
 RestartSec=2s
-ExecStart=/home/www/.cache/pypoetry/virtualenvs/botanim-bot-dRxws4wE-py3.11/bin/python -m botanim_bot
+ExecStart=/home/www/.cache/pypoetry/virtualenvs/supertop-bot-dRxws4wE-py3.11/bin/python -m supertop_bot
 
 [Install]
 WantedBy=multi-user.target
 END
 
 sudo systemctl daemon-reload
-sudo systemctl enable botanimbot.service
-sudo systemctl start botanimbot.service
+sudo systemctl enable supertopbot.service
+sudo systemctl start supertopbot.service
 ```
