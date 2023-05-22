@@ -31,8 +31,8 @@ curl -sSL https://install.python-poetry.org | python3 -
 ```bash
 mkdir -p ~/code/
 cd ~/code
-git clone https://github.com/MaxTaras94/supertop-bot.git
-cd botanim-bot
+git clone https://github.com/MaxTaras94/SuperTopAgencyBot.git
+cd supertop-bot
 ```
 
 Создаём переменные окружения:
