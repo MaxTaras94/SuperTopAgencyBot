@@ -50,7 +50,7 @@ async def start_mailing_cold_clients(update: Update, context: ContextTypes.DEFAU
                                                 media=media_group, 
                                                 protect_content=False)
         keyboard = [
-            [InlineKeyboardButton(f"Понравилась модель №{id_model+1}", callback_data=f"order_a_model_{id_model+1}")] for id_model in range(len(id_models_for_mailing))]
+            [InlineKeyboardButton(f"Понравилась модель №{num+1}", callback_data=f"ordermodel_{id_model}")] for num,id_model in enumerate(id_models_for_mailing)]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await asyncio.sleep(20)
         await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text="Вам понравились наши модели?🔥", reply_markup=reply_markup)

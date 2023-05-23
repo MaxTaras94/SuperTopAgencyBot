@@ -57,7 +57,7 @@ def main():
                               MessageHandler(filters.TEXT & filters.Regex("^Модели$"), handlers.menu_models),
                               MessageHandler(filters.TEXT & filters.Regex("^Клиенты$"), handlers.menu_clients),
                               MessageHandler(filters.TEXT & filters.Regex("^Разослать предложение о работе$"), handlers.get_offer_job_for_models),
-                              CallbackQueryHandler(handlers.order_a_model, pattern="^order_a_model_(\d+)")
+                              CallbackQueryHandler(handlers.order_a_model, pattern="^ordermodel_(\d+)")
                               ])
     application.run_polling()
 
