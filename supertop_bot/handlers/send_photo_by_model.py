@@ -1,7 +1,7 @@
 from supertop_bot.handlers.response import send_response
 from supertop_bot.handlers.keyboards import keyboard_manager_menu
 from supertop_bot.services.googlesheetapi import googlesheetapi
-from supertop_bot.services.useful_functions import generate_links_for_sharing
+from supertop_bot.services.useful_functions import chunk, generate_links_for_sharing
 from supertop_bot.templates import render_template
 from telegram import Chat, Update, InputMediaPhoto, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
@@ -32,11 +32,23 @@ async def send_photos_of_models_potrfolio_for_id(update: Update, context: Contex
     print(caption_text, link_potrfolio)
     links_photo = generate_links_for_sharing(googlesheetapi.get_models_photo(link_potrfolio))
     media_group = []
-    for photo in links_photo:
-        media_group.append(InputMediaPhoto(media=photo))
-    await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=caption_text, reply_markup =markup)
-    await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group, protect_content=False)
-    return ConversationHandler.END
+    if len(links_photo) <=10:
+        for photo in links_photo:
+            media_group.append(InputMediaPhoto(media=photo))
+        await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=caption_text, reply_markup =markup)
+        await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group, protect_content=False)
+        return ConversationHandler.END
+    else:
+        list_of_lists_photos = chunk(links_photo, 10)
+        print(len(list_of_lists_photos))
+        print(f"link_potrfolio = {list_of_lists_photos}")
+        await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=caption_text, reply_markup=markup)
+        for links_photo in list_of_lists_photos:
+            media_group = []
+            for photo in links_photo:
+                media_group.append(InputMediaPhoto(media=photo))
+            await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group, protect_content=False)
+        return ConversationHandler.END
 
     
 async def send_photos_of_models_potrfolio_for_phone(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -49,8 +61,19 @@ async def send_photos_of_models_potrfolio_for_phone(update: Update, context: Con
     links_photo = generate_links_for_sharing(googlesheetapi.get_models_photo(link_potrfolio))
     media_group = []
     markup = ReplyKeyboardMarkup(keyboard_manager_menu, one_time_keyboard=False, resize_keyboard=True)
-    for photo in links_photo:
-        media_group.append(InputMediaPhoto(media=photo))
-    await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=caption_text, reply_markup=markup)
-    await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group, protect_content=False)
-    return ConversationHandler.END
+    if len(links_photo) <=10:
+        for photo in links_photo:
+            media_group.append(InputMediaPhoto(media=photo))
+        await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=caption_text, reply_markup=markup)
+        await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group, protect_content=False)
+        return ConversationHandler.END
+    else:
+        list_of_lists_photos = chunk(links_photo, 10)
+        await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=caption_text, reply_markup=markup)
+        for links_photo in list_of_lists_photos:
+            media_group = []
+            for photo in links_photo:
+                media_group.append(InputMediaPhoto(media=photo))
+            await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group, protect_content=False)
+        return ConversationHandler.END
+            

@@ -3,7 +3,7 @@ from .cold_clients_mailing import *
 from .error_message_recognition import error_message_recognition
 from .get_data_of_model_for_searching_portfolio import choose_parametres_for_searching_portfolio
 from .get_phone_number import phone_number
-from .get_offer_for_models import get_offer_job_for_models
+from .get_offer_for_models import *
 from .keyboards import *
 from .menu_for_managers import *
 from .send_photo_by_model import *
@@ -13,7 +13,12 @@ from .order_a_model import order_a_model
 
 
 __all__ = ["start_mailing_cold_clients",
+           "checking_data_for_job",
            "create_cold_mailing",
+           "start_jo_mailing",
+           "send_jo",
+           "accept_jo",
+           "choose_manager_for_accepting_applications",
            "consent_start_mailing",
            "phone_number",
            "error_message_recognition",

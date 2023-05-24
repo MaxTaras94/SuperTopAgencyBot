@@ -36,15 +36,17 @@ class GoogleSheetsAPI:
         return [item['id'].strip() for item in results['files']]
     
             
-    def get_link_to_portfolio_of_model(self, id_model: int=None, phone_number: int=None) -> tuple:
+    def get_link_to_portfolio_of_model(self, id_model: int=None, phone_number: int=None, id_model_tg: int = None) -> tuple:
         '''Функция на вход получает id модели и возращает ссылку на её портфолио с описанием модели'''
         worksheet = self.__conn_to_spreadSheet.worksheet("Модели")
         df = pd.DataFrame(worksheet.get_all_records())
-        print(f"Я в ф-ции get_link_to_portfolio_of_model. Передан phone_number={phone_number}")
+        print(f" в функции get_link_to_portfolio_of_model\nid_model={id_model}")
         if id_model is not None:
             data = df.loc[(df['id'] == int(id_model))]
         elif phone_number is not None:
             data = df.loc[(df['Телефон'] == int(phone_number))]
+        elif id_model_tg is not None:
+            data = df.loc[(df['id tg'] == int(id_model_tg))]
         return data['Описание для шапки'].values[0], data['Портфолио'].values[0]
     
     def get_id_manager_of_model(self, id_model: int) -> int:
@@ -67,12 +69,17 @@ class GoogleSheetsAPI:
         df_last_two_rows = df.tail(2)
         return df_last_two_rows.id.tolist()
     
-    def get_id_clients_for_mailing(self) -> list:
+    def get_id_clients_for_mailing(self) -> pd.DataFrame:
         '''Функция возвращает id всех клиентов для рассылки'''
         worksheet = self.__conn_to_spreadSheet.worksheet("Клиенты")
         df = pd.DataFrame(worksheet.get_all_records())
-        return df["id tg"].tolist() 
+        return df[["id tg", "id_manager_tg", "Телефон"]]
             
+    def get_data_for_models_by_category(self, category: str) -> pd.DataFrame:
+        worksheet = self.__conn_to_spreadSheet.worksheet("Модели")
+        df = pd.DataFrame(worksheet.get_all_records())
+        data = df.loc[(df['Категория'] == category)]
+        return data
         
     def check_access(self, id_tg: int) -> dict:
         '''Функция проверяет, добавлен ли пользователь c таким id_tg в таблицу или нет. Возвращает картеж, где 1-ый элемент - True/False,

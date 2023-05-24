@@ -45,19 +45,26 @@ def main():
     conv_cold_mailing = ConversationHandler(
         entry_points=[MessageHandler(filters.TEXT & filters.Regex("^Создать холодную рассылку$"),
                       handlers.create_cold_mailing)],
-        states={'CHOOSE_ID_MODELS_FOR_MAILING': [MessageHandler(filters.Regex("^[1-8]*(,[0-9]*[0-9])+$"), handlers.consent_start_mailing),
+        states={'CHOOSE_ID_MODELS_FOR_MAILING': [MessageHandler(filters.Regex("^[1-9]*(,[0-9]*[0-9])*$"), handlers.consent_start_mailing),
                                                 CallbackQueryHandler(handlers.create_cold_mailing, pattern="^(change_list_of_models)$")],
                 'START_MAILING': [CallbackQueryHandler(handlers.start_mailing_cold_clients, pattern="^(start_cold_mailing)$"),
                                   CallbackQueryHandler(handlers.create_cold_mailing, pattern="^(change_list_of_models)$")]},
         fallbacks=[MessageHandler(filters.TEXT, handlers.error_message_recognition)],
         per_message=False)
-    
-    application.add_handlers([conv_handler_start, conv_get_portfolio_models, conv_cold_mailing,
+    conv_jo_for_models = ConversationHandler(
+        entry_points=[MessageHandler(filters.TEXT & filters.Regex("^Разослать предложение о работе$"), handlers.get_offer_job_for_models)],
+        states={'CHOOSE_MANAGER':[MessageHandler(filters.VOICE|filters.TEXT, handlers.choose_manager_for_accepting_applications)],
+                'GET_JO': [CallbackQueryHandler(handlers.checking_data_for_job, pattern="^(Dima|Vika|Olia|Artem|Ksenia)$")],
+                'START_JO': [CallbackQueryHandler(handlers.start_jo_mailing, pattern="^(top60|top60omg)$")],
+                'SEND_JO':[CallbackQueryHandler(handlers.send_jo, pattern="^startjo$"), CallbackQueryHandler(handlers.get_offer_job_for_models, pattern="^change_jo$")]},
+        fallbacks=[MessageHandler(filters.VOICE|filters.TEXT, handlers.error_message_recognition)],
+        per_message=False)
+    application.add_handlers([conv_handler_start, conv_get_portfolio_models, conv_cold_mailing, conv_jo_for_models,
                               MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back),
                               MessageHandler(filters.TEXT & filters.Regex("^Модели$"), handlers.menu_models),
                               MessageHandler(filters.TEXT & filters.Regex("^Клиенты$"), handlers.menu_clients),
-                              MessageHandler(filters.TEXT & filters.Regex("^Разослать предложение о работе$"), handlers.get_offer_job_for_models),
-                              CallbackQueryHandler(handlers.order_a_model, pattern="^ordermodel_(\d+)")
+                              CallbackQueryHandler(handlers.order_a_model, pattern="^ordermodel_(\d+)"),
+                              CallbackQueryHandler(handlers.accept_jo, pattern="^accept_jo$")
                               ])
     application.run_polling()
 
