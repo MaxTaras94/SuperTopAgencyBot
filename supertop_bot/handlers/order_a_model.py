@@ -1,11 +1,10 @@
 import random
 
 from supertop_bot.handlers.response import send_response
-from supertop_bot.handlers.keyboards import keyboard_manager_menu
 from supertop_bot.services.googlesheetapi import googlesheetapi
 from supertop_bot.services.useful_functions import generate_links_for_sharing
 from supertop_bot.templates import render_template
-from telegram import Chat, Update, InputMediaPhoto, ReplyKeyboardMarkup
+from telegram import Chat, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
 from typing import cast

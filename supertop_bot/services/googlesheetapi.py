@@ -116,7 +116,7 @@ class GoogleSheetsAPI:
                 try:
                     data = df.loc[(df['Телефон'].astype(str).str.contains(str(phone_number)))]
                     print(f'data = {data}')
-                    if len(data) == 0:
+                    if data.empty or data['id tg'].values[0] != "":
                         continue
                     else:
                         checking['access'] = True
