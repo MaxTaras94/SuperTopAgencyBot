@@ -40,7 +40,6 @@ class GoogleSheetsAPI:
         '''Функция на вход получает id модели и возращает ссылку на её портфолио с описанием модели'''
         worksheet = self.__conn_to_spreadSheet.worksheet("Модели")
         df = pd.DataFrame(worksheet.get_all_records())
-        print(f" в функции get_link_to_portfolio_of_model\nid_model={id_model}")
         if id_model is not None:
             data = df.loc[(df['id'] == int(id_model))]
         elif phone_number is not None:
@@ -78,8 +77,11 @@ class GoogleSheetsAPI:
     def get_data_for_models_by_category(self, category: str) -> pd.DataFrame:
         worksheet = self.__conn_to_spreadSheet.worksheet("Модели")
         df = pd.DataFrame(worksheet.get_all_records())
-        data = df.loc[(df['Категория'] == category)]
-        return data
+        if category == "Все модели":
+            return df
+        else:
+            data = df.loc[(df['Категория'] == category)]
+            return data
         
     def check_access(self, id_tg: int) -> dict:
         '''Функция проверяет, добавлен ли пользователь c таким id_tg в таблицу или нет. Возвращает картеж, где 1-ый элемент - True/False,

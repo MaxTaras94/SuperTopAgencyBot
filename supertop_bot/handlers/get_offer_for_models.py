@@ -35,7 +35,7 @@ async def choose_manager_for_accepting_applications(update: Update, context: Con
     
 async def checking_data_for_job(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     context.user_data[f"responsible_manager"] = update.callback_query.data
-    keyboard = [[InlineKeyboardButton('ТОП60', callback_data='top60'), InlineKeyboardButton('ТОП60 Вау', callback_data='top60omg')]]
+    keyboard = [[InlineKeyboardButton('ТОП60', callback_data='top60'), InlineKeyboardButton('ТОП60 Вау', callback_data='top60omg')],[ InlineKeyboardButton('Отправить всем', callback_data='all_models')]]
     markup = InlineKeyboardMarkup(keyboard)
     await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=render_template("checking_jo.j2"), reply_markup=markup, parse_mode='HTML')   
     return "START_JO"
@@ -43,7 +43,8 @@ async def checking_data_for_job(update: Update, context: ContextTypes.DEFAULT_TY
 
 async def start_jo_mailing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     categories_dict = {'top60': 'ТОП 60',
-                       'top60omg': 'ТОП 60 вау'}
+                       'top60omg': 'ТОП 60 вау',
+                       'all_models': 'Все модели'}
     category_of_models = categories_dict[update.callback_query.data]
     context.user_data[f"category_of_models_{cast(Chat, update.effective_chat).id}"] = category_of_models
     keyboard = [[InlineKeyboardButton('Да', callback_data='startjo'), InlineKeyboardButton('Изменить задание', callback_data='change_jo')]]
@@ -82,7 +83,7 @@ async def send_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Convers
     # return ConversationHandler.END
     
 async def accept_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    managers_id_tg = {'Dima':449441982,'Vika':449441982,'Olia':449441982, 'Artem':449441982,'Ksenia':449441982}
+    managers_id_tg = {'Dima':449441982,'Vika':570451645,'Olia':449441982, 'Artem':449441982,'Ksenia':449441982}
     
     await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=render_template("mess_for_model_when_she_accept_jo.j2"))
     data_of_models = context.user_data.get(f"models_data_{cast(Chat, update.effective_chat).id}", pd.DataFrame([]))

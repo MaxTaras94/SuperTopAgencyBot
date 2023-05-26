@@ -30,14 +30,17 @@ def main():
         entry_points=[CommandHandler("start", handlers.start), 
                       MessageHandler(filters.TEXT & filters.Regex("^Повторить аутентификацию$"), handlers.start)],
         states={'PHONE_NUMBER': [MessageHandler(filters.Regex("^(\d{8,20})$"), handlers.phone_number)]},
-        fallbacks=[MessageHandler(filters.TEXT, handlers.error_message_recognition)])
+        fallbacks=[MessageHandler(filters.TEXT, handlers.error_message_recognition), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)])
 
     conv_get_portfolio_models = ConversationHandler(
         entry_points=[MessageHandler(filters.TEXT & filters.Regex("^Хочу портфолио модели$"),
                       handlers.choose_parametres_for_searching_portfolio)],
-        states={'CHOOSE_PARAMS_ID_OR_PHONE': [CallbackQueryHandler(handlers.choose_params_id_or_phone, pattern="^(idmodel|phnummod)$")],
-                'SEND_PHOTOS_BY_ID': [MessageHandler(filters.Regex("^(\d{1,5})$"), handlers.send_photos_of_models_potrfolio_for_id)],
-                'SEND_PHOTOS_BY_PHONE': [MessageHandler(filters.Regex("^(\d{9,20})$"), handlers.send_photos_of_models_potrfolio_for_phone)]
+        states={'CHOOSE_PARAMS_ID_OR_PHONE': [CallbackQueryHandler(handlers.choose_params_id_or_phone, pattern="^(idmodel|phnummod)$"), 
+                                              MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
+                'SEND_PHOTOS_BY_ID': [MessageHandler(filters.Regex("^(\d{1,5})$"), handlers.send_photos_of_models_potrfolio_for_id),
+                                      MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
+                'SEND_PHOTOS_BY_PHONE': [MessageHandler(filters.Regex("^(\d{9,20})$"), handlers.send_photos_of_models_potrfolio_for_phone), 
+                                         MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)]
                 },
         fallbacks=[MessageHandler(filters.TEXT, handlers.error_message_recognition)],
         per_message=False)
@@ -48,15 +51,16 @@ def main():
         states={'CHOOSE_ID_MODELS_FOR_MAILING': [MessageHandler(filters.Regex("^[1-9]*(,[0-9]*[0-9])*$"), handlers.consent_start_mailing),
                                                 CallbackQueryHandler(handlers.create_cold_mailing, pattern="^(change_list_of_models)$")],
                 'START_MAILING': [CallbackQueryHandler(handlers.start_mailing_cold_clients, pattern="^(start_cold_mailing)$"),
-                                  CallbackQueryHandler(handlers.create_cold_mailing, pattern="^(change_list_of_models)$")]},
+                                  CallbackQueryHandler(handlers.create_cold_mailing, pattern="^(change_list_of_models)$"),
+                                  MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)]},
         fallbacks=[MessageHandler(filters.TEXT, handlers.error_message_recognition)],
         per_message=False)
     conv_jo_for_models = ConversationHandler(
         entry_points=[MessageHandler(filters.TEXT & filters.Regex("^Разослать предложение о работе$"), handlers.get_offer_job_for_models)],
         states={'CHOOSE_MANAGER':[MessageHandler(filters.VOICE|filters.TEXT, handlers.choose_manager_for_accepting_applications)],
-                'GET_JO': [CallbackQueryHandler(handlers.checking_data_for_job, pattern="^(Dima|Vika|Olia|Artem|Ksenia)$")],
-                'START_JO': [CallbackQueryHandler(handlers.start_jo_mailing, pattern="^(top60|top60omg)$")],
-                'SEND_JO':[CallbackQueryHandler(handlers.send_jo, pattern="^startjo$"), CallbackQueryHandler(handlers.get_offer_job_for_models, pattern="^change_jo$")]},
+                'GET_JO': [CallbackQueryHandler(handlers.checking_data_for_job, pattern="^(Dima|Vika|Olia|Artem|Ksenia)$"), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
+                'START_JO': [CallbackQueryHandler(handlers.start_jo_mailing, pattern="^(top60|top60omg|all_models)$"), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
+                'SEND_JO':[CallbackQueryHandler(handlers.send_jo, pattern="^startjo$"), CallbackQueryHandler(handlers.get_offer_job_for_models, pattern="^change_jo$"), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)]},
         fallbacks=[MessageHandler(filters.VOICE|filters.TEXT, handlers.error_message_recognition)],
         per_message=False)
     application.add_handlers([conv_handler_start, conv_get_portfolio_models, conv_cold_mailing, conv_jo_for_models,

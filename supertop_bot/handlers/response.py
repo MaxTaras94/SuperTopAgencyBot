@@ -16,7 +16,7 @@ async def send_response(
         "chat_id": _get_chat_id(update),
         "disable_web_page_preview": True,
         "text": response,
-        "parse_mode": telegram.constants.ParseMode.HTML,
+        "parse_mode": 'HTML',
         "protect_content": protect_content
     }
     if keyboard:

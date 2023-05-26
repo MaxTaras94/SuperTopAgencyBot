@@ -21,6 +21,6 @@ async def order_a_model(update: Update, context: ContextTypes.DEFAULT_TYPE):
     link_photo = random.choice(links_potrfolio_photo)
     await context.bot.delete_message(cast(Chat, update.effective_chat).id, update.callback_query.message.message_id)
     await send_response(update, context, response=render_template("success_order.j2"), protect_content=True)
-    await context.bot.send_message(chat_id=cast(Chat, id_manager_of_model), text=render_template("new_order.j2", {"client_phone":client_phone, "id_model": id_model}))
+    await context.bot.send_message(chat_id=cast(Chat, id_manager_of_model), text=render_template("new_order.j2", {"client_phone":client_phone, "id_model": id_model}), parse_mode='HTML')
     await context.bot.send_message(chat_id=cast(Chat, id_manager_of_model), text=caption_text)
     await context.bot.send_photo(chat_id=cast(Chat, id_manager_of_model), photo=link_photo)

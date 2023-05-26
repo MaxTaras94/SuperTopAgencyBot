@@ -81,7 +81,7 @@ async def start_mailing_cold_clients(update: Update, context: ContextTypes.DEFAU
                     await context.bot.send_media_group(chat_id=int(client_id), media=media_group, protect_content=True)
     context.user_data.clear()
     await asyncio.sleep(10)
-    for client_id in success_id_clients:
+    for client_id in list(set(success_id_clients)):
         keyboard = [
             [InlineKeyboardButton(f"Понравилась модель №{num+1}", callback_data=f"ordermodel_{id_model}")] for num,id_model in enumerate(id_models_for_mailing)]
         reply_markup = InlineKeyboardMarkup(keyboard)
