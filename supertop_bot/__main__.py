@@ -58,7 +58,7 @@ def main():
     conv_jo_for_models = ConversationHandler(
         entry_points=[MessageHandler(filters.TEXT & filters.Regex("^Разослать предложение о работе$"), handlers.get_offer_job_for_models)],
         states={'CHOOSE_MANAGER':[MessageHandler(filters.VOICE|filters.TEXT, handlers.choose_manager_for_accepting_applications)],
-                'GET_JO': [CallbackQueryHandler(handlers.checking_data_for_job, pattern="^(Dima|Vika|Olia|Artem|Ksenia)$"), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
+                'GET_JO': [CallbackQueryHandler(handlers.checking_data_for_job, pattern="^(Dima|Vika|Olia|Artem|Nadin)$"), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
                 'START_JO': [CallbackQueryHandler(handlers.start_jo_mailing, pattern="^(top60|top60omg|all_models)$"), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
                 'SEND_JO':[CallbackQueryHandler(handlers.send_jo, pattern="^startjo$"), CallbackQueryHandler(handlers.get_offer_job_for_models, pattern="^change_jo$"), MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)]},
         fallbacks=[MessageHandler(filters.VOICE|filters.TEXT, handlers.error_message_recognition)],

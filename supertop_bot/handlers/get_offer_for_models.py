@@ -26,7 +26,7 @@ async def get_offer_job_for_models(update: Update, context: ContextTypes.DEFAULT
 async def choose_manager_for_accepting_applications(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     keyboard = [[InlineKeyboardButton('Дима', callback_data='Dima'), InlineKeyboardButton('Вика', callback_data='Vika')],
                 [InlineKeyboardButton('Оля', callback_data='Olia'), InlineKeyboardButton('Артём', callback_data='Artem')],
-                [InlineKeyboardButton('Ксюша', callback_data='Ksenia')]]
+                [InlineKeyboardButton('Надин', callback_data='Nadin')]]
     markup = InlineKeyboardMarkup(keyboard)
     audio_msg_id = update.message.message_id
     context.user_data[f"audio_msg_id"] = audio_msg_id
@@ -83,7 +83,7 @@ async def send_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Convers
     # return ConversationHandler.END
     
 async def accept_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    managers_id_tg = {'Dima':449441982,'Vika':570451645,'Olia':449441982, 'Artem':449441982,'Ksenia':449441982}
+    managers_id_tg = googlesheetapi.get_tg_id_managers()
     
     await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=render_template("mess_for_model_when_she_accept_jo.j2"))
     data_of_models = context.user_data.get(f"models_data_{cast(Chat, update.effective_chat).id}", pd.DataFrame([]))
@@ -91,8 +91,12 @@ async def accept_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     caption_text, link_potrfolio = googlesheetapi.get_link_to_portfolio_of_model(id_model_tg=id_model)
     links_potrfolio_photo = generate_links_for_sharing(googlesheetapi.get_models_photo(link_potrfolio))
     name_responsible_manager = context.user_data.get("responsible_manager", 'unknown')
-    await context.bot.send_message(chat_id=cast(Chat, managers_id_tg[name_responsible_manager]), text=render_template("mess_for_mng_when_model_accept_jo.j2"))
-    await context.bot.copy_message(chat_id=cast(Chat, managers_id_tg[name_responsible_manager]), from_chat_id=context.user_data.get("from_chat_id_jo"), message_id=context.user_data.get("audio_msg_id"), protect_content=True)
+    chat_id = cast(Chat, managers_id_tg.get(name_responsible_manager, {"unknown":0}).get('id tg', 0))
+    try:
+        await context.bot.send_message(chat_id=chat_id, text=render_template("mess_for_mng_when_model_accept_jo.j2"))
+        await context.bot.copy_message(chat_id=chat_id, from_chat_id=context.user_data.get("from_chat_id_jo"), message_id=context.user_data.get("audio_msg_id"), protect_content=True)
+    except BadRequest:
+        await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=f"‼️<b>Неверный телеграмм ID для менеджера: {name_responsible_manager, }</b>\nРазобраться!", parse_mode='HTML')
     media_group = []
     if len(links_potrfolio_photo) <=10:
         for photo in links_potrfolio_photo:
