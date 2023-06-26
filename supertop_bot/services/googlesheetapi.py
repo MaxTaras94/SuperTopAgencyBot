@@ -11,7 +11,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import gspread
 import pandas as pd
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 
 SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets']
@@ -28,12 +28,12 @@ class GoogleSheetsAPI:
         self.__conn_to_spreadSheet = connection_to_google_sheet.open_by_url(config.GS_TABLE_LINK)
         self.__googleDrive = build('drive', 'v3', credentials=credentials)
 
-    def get_models_photo(self, link: str) -> List[str]:
+    def get_models_photo(self, link: str) -> List[Tuple[str]]:
         '''Функция на вход получает id папки с портфолио модели и возвращает список id файлов, которые содержатся в этой папке'''
         id_folder_from_link = get_id_from_link(link)
         results = self.__googleDrive.files().list(pageSize=50,
                                fields="nextPageToken, files(id, name, mimeType)", q=f"'{id_folder_from_link}' in parents").execute()
-        return [item['id'].strip() for item in results['files']]
+        return [(item['mimeType'], item['id'].strip()) for item in results['files']]
 
     def get_tg_id_managers(self):
         worksheet = self.__conn_to_spreadSheet.worksheet("Менеджеры")

@@ -37,10 +37,9 @@ def main():
                       handlers.choose_parametres_for_searching_portfolio)],
         states={'CHOOSE_PARAMS_ID_OR_PHONE': [CallbackQueryHandler(handlers.choose_params_id_or_phone, pattern="^(idmodel|phnummod)$"), 
                                               MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
-                'SEND_PHOTOS_BY_ID': [MessageHandler(filters.Regex("^(\d{1,5})$"), handlers.send_photos_of_models_potrfolio_for_id),
-                                      MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)],
-                'SEND_PHOTOS_BY_PHONE': [MessageHandler(filters.Regex("^(\d{9,20})$"), handlers.send_photos_of_models_potrfolio_for_phone), 
-                                         MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)]
+                'SEND_PHOTOS': [MessageHandler(filters.Regex("^(\d{1,5})$"), handlers.send_photos_of_models_potrfolio),
+                                      MessageHandler(filters.Regex("^(\d{9,20})$"), handlers.send_photos_of_models_potrfolio),
+                                      MessageHandler(filters.TEXT & filters.Regex("^(Назад|Главное меню)$"), handlers.come_back)]
                 },
         fallbacks=[MessageHandler(filters.TEXT, handlers.error_message_recognition)],
         per_message=False)

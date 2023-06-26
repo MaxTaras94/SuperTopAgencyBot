@@ -42,8 +42,8 @@ async def checking_data_for_job(update: Update, context: ContextTypes.DEFAULT_TY
     
 
 async def start_jo_mailing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
-    categories_dict = {'top60': 'ТОП 60',
-                       'top60omg': 'ТОП 60 вау',
+    categories_dict = {'top60': 'ТОП60',
+                       'top60omg': 'ТОП60 ВАУ',
                        'all_models': 'Все модели'}
     category_of_models = categories_dict[update.callback_query.data]
     context.user_data[f"category_of_models_{cast(Chat, update.effective_chat).id}"] = category_of_models
