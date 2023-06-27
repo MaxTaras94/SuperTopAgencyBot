@@ -66,5 +66,5 @@ async def send_photos_of_models_potrfolio(update: Update, context: ContextTypes.
             await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group_photo, protect_content=False)
         if len(links_video) > 0:
             for item in links_video:
-                await context.bot.send_video(chat_id=cast(Chat, update.effective_chat).id, video=item[1])
+                await context.bot.send_document(chat_id=cast(Chat, update.effective_chat).id, document=item[1])
         return ConversationHandler.END
