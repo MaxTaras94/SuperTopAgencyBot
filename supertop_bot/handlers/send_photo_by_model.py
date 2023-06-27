@@ -52,8 +52,9 @@ async def send_photos_of_models_potrfolio(update: Update, context: ContextTypes.
             media_group_photo.append(InputMediaPhoto(media=item[1]))
         await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=caption_text, reply_markup =markup)
         await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group_photo, protect_content=False)
-        for item in links_video:
-            await context.bot.send_video(chat_id=cast(Chat, update.effective_chat).id, video=item[1])
+        if len(links_video) > 0:
+            for item in links_video:
+                await context.bot.send_video(chat_id=cast(Chat, update.effective_chat).id, video=item[1])
         return ConversationHandler.END
     else:
         list_of_lists_photos = chunk(links_photo, 10)
@@ -63,6 +64,7 @@ async def send_photos_of_models_potrfolio(update: Update, context: ContextTypes.
             for item in links_photo:
                 media_group_video.append(InputMediaVideo(media=item[1]))
             await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group_photo, protect_content=False)
-        for item in links_video:
-            await context.bot.send_video(chat_id=cast(Chat, update.effective_chat).id, video=item[1])
+        if len(links_video) > 0:
+            for item in links_video:
+                await context.bot.send_video(chat_id=cast(Chat, update.effective_chat).id, video=item[1])
         return ConversationHandler.END
