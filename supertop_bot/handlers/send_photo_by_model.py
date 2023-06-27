@@ -62,7 +62,7 @@ async def send_photos_of_models_potrfolio(update: Update, context: ContextTypes.
         for links_photo in list_of_lists_photos:
             media_group_photo = []
             for item in links_photo:
-                media_group_video.append(InputMediaVideo(media=item[1]))
+                media_group_photo.append(InputMediaPhoto(media=item[1]))
             await context.bot.send_media_group(chat_id=cast(Chat, update.effective_chat).id, media=media_group_photo, protect_content=False)
         if len(links_video) > 0:
             for item in links_video:
