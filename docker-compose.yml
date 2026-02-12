@@ -1,0 +1,21 @@
+
+services:
+  bot:
+    build: . 
+    container_name: supertop_bot
+    restart: always
+    env_file:
+      - .env 
+    volumes:
+      - ./main.db:/app/main.db  
+      - ./telegram_bot.log:/app/telegram_bot.log  
+    environment:
+      - PYTHONUNBUFFERED=1  
+    ports:
+      - "8000:8000" 
+    networks:
+      - bot_net
+
+networks:
+  bot_net:
+    driver: bridge

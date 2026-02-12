@@ -64,7 +64,7 @@ async def send_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Convers
         return ConversationHandler.END
     keyboard = [[InlineKeyboardButton('Готова', callback_data='accept_jo'), InlineKeyboardButton('Не могу', callback_data='reject_jo')]]
     markup_jo_model = InlineKeyboardMarkup(keyboard)
-    context.user_data[f"models_data"] = models_data
+    context.user_data[f"models_data_{cast(Chat, update.effective_chat).id}"] = models_data
     context.user_data["from_chat_id_jo"] = cast(Chat, update.effective_chat).id
     if not models_data.empty:
         for id_model in models_data['id tg'].tolist():
@@ -102,14 +102,14 @@ async def accept_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if len(links_potrfolio_photo) <=10:
         for photo in links_potrfolio_photo:
             media_group.append(InputMediaPhoto(media=photo))
-        await context.bot.send_message(chat_id=cast(Chat, chat_id), text=caption_text)
-        await context.bot.send_media_group(chat_id=cast(Chat, chat_id), media=media_group, protect_content=False)
+        await context.bot.send_message(chat_id=cast(Chat, managers_id_tg[name_responsible_manager]), text=caption_text)
+        await context.bot.send_media_group(chat_id=cast(Chat, managers_id_tg[name_responsible_manager]), media=media_group, protect_content=False)
         return ConversationHandler.END
     else:
         list_of_lists_photos = chunk(links_potrfolio_photo, 10)
-        await context.bot.send_message(chat_id=cast(Chat, chat_id), text=caption_text)
+        await context.bot.send_message(chat_id=cast(Chat, managers_id_tg[name_responsible_manager]), text=caption_text)
         for links_photo in list_of_lists_photos:
             media_group = []
             for photo in links_photo:
                 media_group.append(InputMediaPhoto(media=photo))
-            await context.bot.send_media_group(chat_id=cast(Chat, chat_id), media=media_group, protect_content=False)
+            await context.bot.send_media_group(chat_id=cast(Chat, managers_id_tg[name_responsible_manager]), media=media_group, protect_content=False)

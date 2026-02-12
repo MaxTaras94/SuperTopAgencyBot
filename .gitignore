@@ -1,12 +1,16 @@
 # ide folders
-.idea/
 .vscode/
+*.json
 
-# not project files
-__pycache__
-db.sqlite3
-.DS_Store
-.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.env 
 .log
+main.db
 .bak
 .ruff_cache
+.txt
