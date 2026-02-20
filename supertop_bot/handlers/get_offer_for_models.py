@@ -84,7 +84,7 @@ async def send_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Convers
     # return ConversationHandler.END
     
 async def accept_jo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    managers_id_tg = googlesheetapi.get_tg_id_managers()
+    managers_id_tg = googlesheetapi.get_tg_id_managers()[0]
     
     await context.bot.send_message(chat_id=cast(Chat, update.effective_chat).id, text=render_template("mess_for_model_when_she_accept_jo.j2"))
     data_of_models = context.user_data.get(f"models_data_{cast(Chat, update.effective_chat).id}", pd.DataFrame([]))

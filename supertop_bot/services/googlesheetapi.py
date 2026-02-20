@@ -311,7 +311,7 @@ class GoogleSheetsAPI:
 
     def get_tg_id_managers(self):
         df = self._get_managers_df()
-        return df.set_index('name').T.to_dict()
+        return df.set_index('name').T.to_dict(), df['id_tg'].to_list()
 
     def get_clinets_table_for_manager_id(self, tg_id_manager: int):
         # Теперь из БД, фильтруя по manager
