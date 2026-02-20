@@ -34,9 +34,9 @@ class GoogleSheetsAPI:
     Использует lazy loading для минимизации API-вызовов и retry для обработки квот.
     '''
     # Константы для TTL кэша (в секундах)
-    TTL_MANAGERS = 24 * 3600  # 24 часа
-    TTL_CLIENTS = 24 * 3600   # 24 часа
-    TTL_MODELS = 4 * 3600     # 4 часа
+    TTL_MANAGERS = 2100
+    TTL_CLIENTS = 2100 
+    TTL_MODELS = 2100
 
     def __init__(self, db_path='main_db.db'):
         self.db_path = db_path
