@@ -4,7 +4,8 @@ from supertop_bot.handlers.response import send_response
 from supertop_bot.services.googlesheetapi import googlesheetapi
 from supertop_bot.services.useful_functions import generate_links_for_sharing
 from supertop_bot.templates import render_template
-from telegram import Chat, Update
+from telegram import Chat, Update, InlineKeyboardButton, InlineKeyboardMarkup
+
 from telegram.ext import ContextTypes, ConversationHandler
 
 from typing import cast
@@ -16,7 +17,17 @@ async def order_a_model(update: Update, context: ContextTypes.DEFAULT_TYPE):
     id_model = query.split("_")[-3]
     client_id = int(query.split("_")[-2])
     manager_id = int(query.split("_")[-1])
-    await context.bot.send_message(chat_id=manager_id, text=render_template("new_order.j2", {"client_id": client_id, "id_model": id_model}), parse_mode='HTML')
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                text='Написать клиенту',
+                url=f"tg://user?id={client_id}"
+            )
+        ]
+    ]
+    markup = InlineKeyboardMarkup(keyboard)
+    await context.bot.send_message(chat_id=manager_id, text=render_template("new_order.j2", {"client_id": client_id, "id_model": id_model}), reply_markup=markup, parse_mode='HTML')
+    await context.bot.send_message(chat_id=client_id, text=render_template("successful_request_сontact_manager.j2"), parse_mode='HTML')
     # id_manager_of_model = googlesheetapi.get_id_manager_of_model(id_model)
     # client_phone = googlesheetapi.get_number_phone_of_client(cast(Chat, update.effective_chat).id)
     # caption_text, link_portfolio = googlesheetapi.get_link_to_portfolio_of_model(id_model=id_model)

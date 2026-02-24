@@ -433,8 +433,9 @@ class GoogleSheetsAPI:
             if col_idx is None:
                 raise ValueError(f"Column {key} not found in sheet")
             try:
-                if len(value) > 1:
-                    value = [v.strip() for v in value]
+                if isinstance(value, list):
+                    values_str = [str(v) for v in value]
+                    value = ", ".join(values_str)
                 worksheet.update_cell(row_num, col_idx, value)
             except APIError as e:
                 if e.response and e.response.status_code == 429:

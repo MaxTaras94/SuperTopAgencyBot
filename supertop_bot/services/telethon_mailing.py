@@ -49,6 +49,7 @@ async def execute_scheduled_mailing(context: CallbackContext) -> None:
                     if len(links_video) > 0:
                         for item in links_video:
                             await context.bot.send_video(chat_id=client_id, video=item[1])
+                            await asyncio.sleep(1.5) 
                 else:
                     list_of_lists_photos = chunk(links_photo, 10)
                     await context.bot.send_message(chat_id=client_id, text=f"<b>Модель №{num+1}</b>\n\n"+caption_text, parse_mode='HTML')
@@ -58,22 +59,25 @@ async def execute_scheduled_mailing(context: CallbackContext) -> None:
                             media_group_photo.append(InputMediaPhoto(media=item[1]))
                         logger.info(f'media_group_photo = {media_group_photo}')
                         await context.bot.send_media_group(chat_id=client_id, media=media_group_photo, protect_content=False)
+                        await asyncio.sleep(1.5) 
                     if len(links_video) > 0:
                         for item in links_video:
                             await context.bot.send_document(chat_id=client_id, document=item[1])
+                            await asyncio.sleep(1.5)
                         
                     success_id_clients.append(client_id)
                 keyboard = [
                     [InlineKeyboardButton("Запросить связь с менеджером 🗣", callback_data=f"ordermodel_{id_model}_{client_id}_{manager_id}")]
                 ]
                 reply_markup = InlineKeyboardMarkup(keyboard)
+                await asyncio.sleep(1.5)
                 await context.bot.send_message(
                     chat_id=int(client_id),
                     text=f"✅ Понравилась модель №{num+1}",
                     reply_markup=reply_markup,
                     protect_content=True
                 )
-                await asyncio.sleep(1) 
+                 
         
         # except Forbidden:
         #     client_data = clients_df.loc[clients_df['id_tg'] == int(client_id)]
